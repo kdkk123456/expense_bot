@@ -1,0 +1,6 @@
+google-adk
+google-genai
+python-dotenv
+python-telegram-bot
+requests
+openpyxl

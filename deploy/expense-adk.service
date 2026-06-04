@@ -1,0 +1,36 @@
+[Unit]
+Description=Expense Bot ADK Runner (Gemini Agent)
+Documentation=https://github.com/atomnik/expense_bot
+After=expense-mcp.service
+Requires=expense-mcp.service
+
+[Service]
+Type=simple
+User=expensebot
+Group=expensebot
+WorkingDirectory=/opt/expense-bot
+EnvironmentFile=/run/expense-bot/env
+ExecStart=/usr/local/bin/adk api_server --port 8000 /opt/expense-bot
+Restart=on-failure
+RestartSec=5
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/expense-bot
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=expense-adk
+
+[Install]
+WantedBy=multi-user.target

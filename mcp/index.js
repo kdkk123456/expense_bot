@@ -691,8 +691,8 @@ app.post("/messages", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 6666;
-const serverInstance = app.listen(PORT, () => {
-  console.error(`MCP SSE Server listening on port ${PORT}`);
+const serverInstance = app.listen(PORT, '127.0.0.1', () => {
+  console.error(`MCP SSE Server listening on 127.0.0.1:${PORT}`);
 });
 console.error("DB target:", getSafeDbTarget(rawConnectionString || ""));
 

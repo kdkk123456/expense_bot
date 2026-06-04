@@ -1,0 +1,36 @@
+[Unit]
+Description=Expense Bot Telegram Interface (Long-Polling)
+Documentation=https://github.com/atomnik/expense_bot
+After=expense-adk.service
+Requires=expense-adk.service
+
+[Service]
+Type=simple
+User=expensebot
+Group=expensebot
+WorkingDirectory=/opt/expense-bot
+EnvironmentFile=/run/expense-bot/env
+ExecStart=/usr/bin/python3 telegram_bot.py
+Restart=on-failure
+RestartSec=5
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/expense-bot
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=expense-telegram
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,37 @@
+[Unit]
+Description=Expense Bot MCP Server (Node.js)
+Documentation=https://github.com/atomnik/expense_bot
+After=network-online.target expense-secrets.service
+Requires=expense-secrets.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=expensebot
+Group=expensebot
+WorkingDirectory=/opt/expense-bot/mcp
+EnvironmentFile=/run/expense-bot/env
+ExecStart=/usr/bin/node index.js
+Restart=on-failure
+RestartSec=5
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/expense-bot
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=expense-mcp
+
+[Install]
+WantedBy=multi-user.target

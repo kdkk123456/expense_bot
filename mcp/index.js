@@ -84,6 +84,10 @@ if (!rawConnectionString) {
 
 console.error("DB target:", getSafeDbTarget(rawConnectionString || ""));
 
+const dns = require("dns");
+// Force IPv4 DNS resolution — EC2 instances often lack IPv6 connectivity
+dns.setDefaultResultOrder("ipv4first");
+
 const poolConfig = {
   connectionString: sanitizedConnectionString,
 };

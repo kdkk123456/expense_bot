@@ -36,6 +36,10 @@ cd "$APP_DIR"
 echo "      Fixing ownership for expensebot user..."
 sudo chown -R expensebot:expensebot "$APP_DIR"
 
+# The shell scripts must stay executable; a git checkout/restore can drop the
+# bit, which makes systemd's ExecStart fail with 203/EXEC.
+sudo chmod +x "$APP_DIR"/deploy/*.sh
+
 # --------------------------------------------------
 # 3. Reload systemd (in case service files changed)
 # --------------------------------------------------

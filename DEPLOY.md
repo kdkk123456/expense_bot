@@ -370,6 +370,48 @@ ss -tlnp | grep 6666
 ss -tlnp | grep 8000
 ```
 
+### Postgres Connection Fails (IPv6 `ENETUNREACH`)
+
+**Symptom:** MCP logs show `connect ENETUNREACH 2406:da14:...`
+
+EC2 instances may lack IPv6 connectivity. The MCP service forces IPv4 via:
+```ini
+Environment=NODE_OPTIONS=--dns-result-order=ipv4first
+```
+Verify this line exists in `/etc/systemd/system/expense-mcp.service`. If missing, re-copy:
+```bash
+sudo cp /opt/expense-bot/deploy/expense-mcp.service /etc/systemd/system/
+sudo systemctl daemon-reload && sudo systemctl restart expense-mcp
+```
+
+### Git Pull Fails (`dubious ownership`)
+
+**Symptom:** `fatal: detected dubious ownership in repository at '/opt/expense-bot'`
+
+The repo is owned by `expensebot` but `git pull` runs as `root` via sudo:
+```bash
+sudo git config --global --add safe.directory /opt/expense-bot
+```
+
+### Python `ModuleNotFoundError` (PEP 668)
+
+**Symptom:** `No module named 'openpyxl'` or similar import errors.
+
+The systemd service files must point to the venv Python, not system Python. Check:
+```bash
+grep ExecStart /etc/systemd/system/expense-telegram.service
+# Expected: /opt/expense-bot/venv/bin/python3
+grep ExecStart /etc/systemd/system/expense-adk.service
+# Expected: /opt/expense-bot/venv/bin/adk
+```
+
+If they point to `/usr/bin/python3` or `/usr/local/bin/adk`, re-copy the service files:
+```bash
+sudo cp /opt/expense-bot/deploy/expense-*.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl restart expense-adk expense-telegram
+```
+
 ### Secrets Not Loading
 
 ```bash
@@ -406,6 +448,7 @@ aws ec2 describe-instances \
 # Make sure key has correct permissions
 chmod 400 ~/.ssh/expense-bot-key.pem
 ```
+
 
 ---
 

@@ -1,4 +1,5 @@
 google-adk
+mcp
 google-genai
 python-dotenv
 python-telegram-bot

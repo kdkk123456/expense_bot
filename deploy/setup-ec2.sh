@@ -89,10 +89,13 @@ echo "  Installing Node.js dependencies..."
 cd "$APP_DIR/mcp"
 sudo -u "$APP_USER" npm ci --production
 
-# Python dependencies
-echo "  Installing Python dependencies..."
+# Python virtual environment & dependencies
+echo "  Creating Python virtual environment..."
 cd "$APP_DIR"
-pip3 install -r requirements.txt --quiet
+python3 -m venv venv
+chown -R "$APP_USER":"$APP_USER" venv
+echo "  Installing Python dependencies into venv..."
+sudo -u "$APP_USER" "$APP_DIR/venv/bin/pip" install -r requirements.txt --quiet
 
 # --------------------------------------------------
 # 8. Configure UFW firewall

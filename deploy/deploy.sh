@@ -28,7 +28,7 @@ npm ci --production --quiet
 
 echo "[2/4] Installing Python dependencies..."
 cd "$APP_DIR"
-pip3 install -r requirements.txt --quiet
+/opt/expense-bot/venv/bin/pip install -r requirements.txt --quiet
 
 # --------------------------------------------------
 # 3. Reload systemd (in case service files changed)

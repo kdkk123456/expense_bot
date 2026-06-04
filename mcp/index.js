@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import dns from "dns";
 // Suppress dotenv's console output to prevent interference with MCP's JSON-RPC protocol
 const originalLog = console.log;
 const originalError = console.error;
@@ -84,7 +85,6 @@ if (!rawConnectionString) {
 
 console.error("DB target:", getSafeDbTarget(rawConnectionString || ""));
 
-const dns = require("dns");
 // Force IPv4 DNS resolution — EC2 instances often lack IPv6 connectivity
 dns.setDefaultResultOrder("ipv4first");
 

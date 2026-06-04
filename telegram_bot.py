@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 ADK_BASE_URL = os.getenv("ADK_BASE_URL", "http://127.0.0.1:8000")
 ADK_RUNNER_URL = os.getenv("ADK_RUNNER_URL", f"{ADK_BASE_URL}/run")
-ADK_APP_NAME = os.getenv("ADK_APP_NAME", "expense-bot")
+ADK_APP_NAME = os.getenv("ADK_APP_NAME", "expense_bot")
 ADK_USER_ID_PREFIX = os.getenv("ADK_USER_ID_PREFIX", "telegram")
 REQUEST_TIMEOUT = int(os.getenv("ADK_REQUEST_TIMEOUT", "90"))
 

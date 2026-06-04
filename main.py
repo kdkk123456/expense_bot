@@ -4,7 +4,7 @@ load_dotenv()
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai.types import Content, Part
-from agent import root_agent
+from expense_bot.agent import root_agent
 
 async def main():
     session_service = InMemorySessionService()

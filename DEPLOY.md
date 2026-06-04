@@ -487,10 +487,11 @@ chmod 400 ~/.ssh/expense-bot-key.pem
 ## File Structure
 
 ```
-expense_bot/                          # repo root == ADK AGENTS_DIR (/opt/expense-bot)
-├── expense_bot/                      # ADK agent package — folder name IS the appName
-│   ├── __init__.py                   # exposes root_agent
-│   └── agent.py                      # Gemini agent definition
+expense_bot/                          # repo root (/opt/expense-bot)
+├── agents/                           # ADK AGENTS_DIR — contains ONLY agent packages
+│   └── expense_bot/                  # agent package — folder name IS the appName
+│       ├── __init__.py               # exposes root_agent
+│       └── agent.py                  # Gemini agent definition
 ├── telegram_bot.py                   # Telegram bot (long-polling)
 ├── main.py                           # Local CLI runner
 ├── requirements.txt                  # Python dependencies

@@ -1,6 +1,11 @@
 import asyncio
+import os
+import sys
 from dotenv import load_dotenv  # ✅ add this
-load_dotenv() 
+load_dotenv()
+# The agent package lives under agents/ (the ADK AGENTS_DIR), which is not on
+# sys.path when running this CLI from the repo root. Add it so the import works.
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "agents"))
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai.types import Content, Part

@@ -34,7 +34,7 @@ function sanitizeConnectionString(raw) {
 }
 
 function isSupabaseConnection(raw) {
-  return typeof raw === "string" && raw.includes("supabase.co");
+  return typeof raw === "string" && (raw.includes("supabase.co") || raw.includes("supabase.com"));
 }
 
 function getSafeDbTarget(raw) {

@@ -84,6 +84,9 @@ fi
 
 chown -R "$APP_USER":"$APP_USER" "$APP_DIR"
 
+# Allow root to operate on expensebot-owned repo
+git config --global --add safe.directory "$APP_DIR"
+
 # Node.js dependencies (MCP server)
 echo "  Installing Node.js dependencies..."
 cd "$APP_DIR/mcp"

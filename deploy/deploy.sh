@@ -30,6 +30,12 @@ echo "[2/4] Installing Python dependencies..."
 cd "$APP_DIR"
 /opt/expense-bot/venv/bin/pip install -r requirements.txt --quiet
 
+# Pulling/installing as root leaves new files root-owned; the services run
+# as 'expensebot' and must be able to write runtime dirs (e.g. ADK's .adk
+# session store inside the agent package). Re-assert ownership after pull.
+echo "      Fixing ownership for expensebot user..."
+sudo chown -R expensebot:expensebot "$APP_DIR"
+
 # --------------------------------------------------
 # 3. Reload systemd (in case service files changed)
 # --------------------------------------------------

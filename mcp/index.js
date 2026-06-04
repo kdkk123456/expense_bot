@@ -119,7 +119,7 @@ async function ensureSerialPrimaryKey(tableName, columnName) {
       END
       $$;
     `);
-    await pool.query(`SELECT setval('${sequenceName}', COALESCE((SELECT MAX("${columnName}") FROM "${tableName}"), 0) + 1, false)`);
+    await pool.query(`SELECT setval('${sequenceName}', COALESCE((SELECT MAX("${columnName}")::bigint FROM "${tableName}"), 0) + 1, false)`);
   } catch (error) {
     console.error(`Failed to ensure serial primary key for ${tableName}.${columnName}:`, getErrorMessage(error));
   }
